@@ -1,0 +1,696 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Musician | Career Profile & Industry Standards</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;600;800&display=swap" rel="stylesheet">
+    
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- QR Code Library for interactive sharing -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        heading: ['Outfit', 'sans-serif'],
+                    },
+                    colors: {
+                        studio: {
+                            950: '#090a0f',
+                            900: '#11131d',
+                            800: '#1c1f30',
+                            700: '#2d324d',
+                            accent: '#8b5cf6',
+                            gold: '#f59e0b',
+                            neon: '#06b6d4'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #090a0f;
+            color: #f3f4f6;
+        }
+        .font-heading {
+            font-family: 'Outfit', sans-serif;
+        }
+        .glass-card {
+            background: rgba(17, 19, 29, 0.75);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        .glass-card:hover {
+            border-color: rgba(139, 92, 246, 0.4);
+            box-shadow: 0 10px 30px -10px rgba(139, 92, 246, 0.2);
+        }
+        .gradient-text {
+            background: linear-gradient(135deg, #f59e0b 0%, #ec4899 50%, #8b5cf6 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .glow-effect {
+            box-shadow: 0 0 25px -5px rgba(139, 92, 246, 0.3);
+        }
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #090a0f;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #2d324d;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #8b5cf6;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col antialiased selection:bg-purple-500 selection:text-white">
+
+    <!-- Sticky Navigation Header -->
+    <header class="sticky top-0 z-40 w-full glass-card border-b border-slate-800/80 bg-studio-950/80 backdrop-blur-md">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <!-- Logo / Title Brand -->
+                <a href="#" class="flex items-center gap-3 group">
+                    <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-amber-500 via-rose-500 to-purple-600 flex items-center justify-center text-white shadow-lg shadow-purple-500/20 group-hover:scale-105 transition-transform duration-300">
+                        <i class="fa-solid fa-music text-lg"></i>
+                    </div>
+                    <span class="font-heading font-extrabold text-xl sm:text-2xl tracking-tight text-white group-hover:text-amber-400 transition-colors">
+                        Musician<span class="text-purple-500">.</span>
+                    </span>
+                </a>
+
+                <!-- Desktop Nav -->
+                <nav class="hidden md:flex items-center gap-8 text-sm font-medium text-slate-300">
+                    <a href="#overview" class="hover:text-amber-400 transition-colors flex items-center gap-2">
+                        <i class="fa-solid fa-compass text-xs opacity-70"></i> Overview
+                    </a>
+                    <a href="#skills" class="hover:text-amber-400 transition-colors flex items-center gap-2">
+                        <i class="fa-solid fa-award text-xs opacity-70"></i> Skills & Specs
+                    </a>
+                    <a href="#duties" class="hover:text-amber-400 transition-colors flex items-center gap-2">
+                        <i class="fa-solid fa-sliders text-xs opacity-70"></i> Core Duties
+                    </a>
+                    <a href="#pay" class="hover:text-amber-400 transition-colors flex items-center gap-2">
+                        <i class="fa-solid fa-sterling-sign text-xs opacity-70"></i> Average Pay
+                    </a>
+                </nav>
+
+                <!-- Actions / QR Button -->
+                <div class="flex items-center gap-3">
+                    <button id="qrOpenBtn" class="px-3.5 py-2 rounded-lg bg-studio-800 hover:bg-purple-900/50 text-slate-200 border border-slate-700/80 text-xs sm:text-sm font-medium flex items-center gap-2 transition-all hover:border-purple-500/50" title="Get QR Code for mobile sharing">
+                        <i class="fa-solid fa-qrcode text-amber-400"></i>
+                        <span class="hidden sm:inline">Share QR</span>
+                    </button>
+                    
+                    <!-- Mobile Menu Button -->
+                    <button id="mobileMenuBtn" class="md:hidden p-2 rounded-lg text-slate-400 hover:text-white hover:bg-studio-800 focus:outline-none">
+                        <i class="fa-solid fa-bars text-xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Drawer Menu -->
+        <div id="mobileMenu" class="hidden md:hidden bg-studio-900 border-b border-slate-800 px-4 pt-2 pb-4 space-y-2 text-sm">
+            <a href="#overview" class="mobile-link block px-3 py-2 rounded-md font-medium text-slate-200 hover:bg-studio-800 hover:text-amber-400">
+                <i class="fa-solid fa-compass mr-2 text-purple-400"></i> Overview
+            </a>
+            <a href="#skills" class="mobile-link block px-3 py-2 rounded-md font-medium text-slate-200 hover:bg-studio-800 hover:text-amber-400">
+                <i class="fa-solid fa-award mr-2 text-purple-400"></i> Skills & Qualifications
+            </a>
+            <a href="#duties" class="mobile-link block px-3 py-2 rounded-md font-medium text-slate-200 hover:bg-studio-800 hover:text-amber-400">
+                <i class="fa-solid fa-sliders mr-2 text-purple-400"></i> Musician Duties
+            </a>
+            <a href="#pay" class="mobile-link block px-3 py-2 rounded-md font-medium text-slate-200 hover:bg-studio-800 hover:text-amber-400">
+                <i class="fa-solid fa-sterling-sign mr-2 text-purple-400"></i> Average Pay & MU Rates
+            </a>
+        </div>
+    </header>
+
+    <main class="flex-grow">
+        <!-- Hero Section -->
+        <section id="overview" class="relative pt-12 pb-20 overflow-hidden">
+            <!-- Background Glow Orbs -->
+            <div class="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-purple-600/15 rounded-full blur-3xl pointer-events-none"></div>
+            <div class="absolute top-1/3 right-10 w-72 h-72 bg-amber-500/10 rounded-full blur-3xl pointer-events-none"></div>
+
+            <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+                <div class="text-center max-w-3xl mx-auto">
+                    <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-studio-800/90 border border-purple-500/30 text-xs sm:text-sm font-medium text-amber-300 mb-6 shadow-inner">
+                        <span class="flex h-2 w-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                        UK Music Industry Career Profile
+                    </div>
+
+                    <h1 class="font-heading text-4xl sm:text-6xl lg:text-7xl font-extrabold tracking-tight text-white mb-6 leading-tight">
+                        The Professional <br class="hidden sm:inline">
+                        <span class="gradient-text">Musician Guide</span>
+                    </h1>
+
+                    <p class="text-slate-300 text-base sm:text-lg leading-relaxed mb-8 font-light">
+                        Explore the essential breakdown of a modern music professional. From technical instrumental mastery and session recording to live performance duties, qualifications, and standardized UK pay structures.
+                    </p>
+
+                    <!-- Quick Action Chips -->
+                    <div class="flex flex-wrap justify-center gap-3 text-xs sm:text-sm">
+                        <div class="px-4 py-2.5 rounded-xl glass-card text-slate-300 flex items-center gap-2">
+                            <i class="fa-solid fa-guitar text-amber-400"></i> Performance & Studio
+                        </div>
+                        <div class="px-4 py-2.5 rounded-xl glass-card text-slate-300 flex items-center gap-2">
+                            <i class="fa-solid fa-graduation-cap text-rose-400"></i> Degree & Grade 8 Standards
+                        </div>
+                        <div class="px-4 py-2.5 rounded-xl glass-card text-slate-300 flex items-center gap-2">
+                            <i class="fa-solid fa-shield-halved text-purple-400"></i> Musicians' Union Aligned
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Interactive Studio Soundboard Preview Banner -->
+                <div class="mt-12 glass-card rounded-2xl p-4 sm:p-6 glow-effect border-purple-500/20 max-w-4xl mx-auto">
+                    <div class="flex flex-col md:flex-row items-center justify-between gap-4">
+                        <div class="flex items-center gap-4">
+                            <div class="w-12 h-12 rounded-full bg-purple-500/20 border border-purple-500/40 flex items-center justify-center text-purple-400 shrink-0">
+                                <i class="fa-solid fa-compact-disc text-2xl animate-spin" style="animation-duration: 8s;"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-heading font-semibold text-white text-base sm:text-lg">Interactive Audio Experience</h3>
+                                <p class="text-slate-400 text-xs sm:text-sm">Test synthetic tone synthesizer right in your browser</p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-center gap-2 w-full md:w-auto justify-end">
+                            <button id="playAudioBtn" class="w-full md:w-auto px-5 py-2.5 rounded-xl bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white font-medium text-xs sm:text-sm shadow-md transition-all flex items-center justify-center gap-2">
+                                <i class="fa-solid fa-play text-xs"></i> Play Studio Chords
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 1: SKILLS & QUALIFICATIONS -->
+        <section id="skills" class="py-16 bg-studio-900/50 border-t border-slate-800/80 relative">
+            <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center max-w-2xl mx-auto mb-14">
+                    <span class="text-purple-400 font-semibold text-xs sm:text-sm uppercase tracking-wider">Section 01</span>
+                    <h2 class="font-heading text-3xl sm:text-4xl font-bold text-white mt-2">Skills & Qualifications</h2>
+                    <p class="text-slate-400 text-sm sm:text-base mt-2">Technical competencies and academic benchmarks required to thrive in the music industry.</p>
+                </div>
+
+                <!-- Grid Layout for Skills -->
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    
+                    <!-- Card 1: Instrumental Proficiency -->
+                    <div class="glass-card rounded-2xl p-6 transition-all duration-300 hover:-translate-y-1">
+                        <div class="w-12 h-12 rounded-xl bg-amber-500/10 border border-amber-500/30 flex items-center justify-center text-amber-400 mb-5">
+                            <i class="fa-solid fa-guitar text-xl"></i>
+                        </div>
+                        <h3 class="font-heading text-xl font-bold text-white mb-2">Instrumental Proficiency</h3>
+                        <p class="text-slate-300 text-sm leading-relaxed mb-4">
+                            Exceptional technique, tone control, and dexterity on primary and secondary instruments. Ability to adapt tone across genre styles (Jazz, Rock, Classical, Pop).
+                        </p>
+                        <ul class="space-y-2 text-xs text-slate-400">
+                            <li class="flex items-center gap-2"><i class="fa-solid fa-check text-emerald-400"></i> Multi-instrumental versatility</li>
+                            <li class="flex items-center gap-2"><i class="fa-solid fa-check text-emerald-400"></i> Improvisational competence</li>
+                        </ul>
+                    </div>
+
+                    <!-- Card 2: Music Theory & Sight-Reading -->
+                    <div class="glass-card rounded-2xl p-6 transition-all duration-300 hover:-translate-y-1">
+                        <div class="w-12 h-12 rounded-xl bg-rose-500/10 border border-rose-500/30 flex items-center justify-center text-rose-400 mb-5">
+                            <i class="fa-solid fa-book-open-reader text-xl"></i>
+                        </div>
+                        <h3 class="font-heading text-xl font-bold text-white mb-2">Theory & Sight-Reading</h3>
+                        <p class="text-slate-300 text-sm leading-relaxed mb-4">
+                            Fluent reading of standard notation, lead sheets, and chord charts under high-pressure sight-reading conditions for television, film, or theatre sessions.
+                        </p>
+                        <ul class="space-y-2 text-xs text-slate-400">
+                            <li class="flex items-center gap-2"><i class="fa-solid fa-check text-emerald-400"></i> ABRSM Grade 8 Theory level</li>
+                            <li class="flex items-center gap-2"><i class="fa-solid fa-check text-emerald-400"></i> Ear training & transposing</li>
+                        </ul>
+                    </div>
+
+                    <!-- Card 3: Studio & DAW Audio Production -->
+                    <div class="glass-card rounded-2xl p-6 transition-all duration-300 hover:-translate-y-1">
+                        <div class="w-12 h-12 rounded-xl bg-purple-500/10 border border-purple-500/30 flex items-center justify-center text-purple-400 mb-5">
+                            <i class="fa-solid fa-sliders text-xl"></i>
+                        </div>
+                        <h3 class="font-heading text-xl font-bold text-white mb-2">Studio & DAW Production</h3>
+                        <p class="text-slate-300 text-sm leading-relaxed mb-4">
+                            Command of Digital Audio Workstations (Pro Tools, Logic Pro, Ableton Live). Understanding micro-timing, click tracks, MIDI orchestration, and home studio tracking.
+                        </p>
+                        <ul class="space-y-2 text-xs text-slate-400">
+                            <li class="flex items-center gap-2"><i class="fa-solid fa-check text-emerald-400"></i> Pro Tools / Logic Pro X mastery</li>
+                            <li class="flex items-center gap-2"><i class="fa-solid fa-check text-emerald-400"></i> Remote recording capabilities</li>
+                        </ul>
+                    </div>
+
+                    <!-- Card 4: Performance Stamina -->
+                    <div class="glass-card rounded-2xl p-6 transition-all duration-300 hover:-translate-y-1">
+                        <div class="w-12 h-12 rounded-xl bg-cyan-500/10 border border-cyan-500/30 flex items-center justify-center text-cyan-400 mb-5">
+                            <i class="fa-solid fa-bolt text-xl"></i>
+                        </div>
+                        <h3 class="font-heading text-xl font-bold text-white mb-2">Performance Stamina</h3>
+                        <p class="text-slate-300 text-sm leading-relaxed mb-4">
+                            Physical endurance and mental focus to maintain peak physical execution during demanding multi-set touring schedules, theatrical pit work, and long rehearsals.
+                        </p>
+                        <ul class="space-y-2 text-xs text-slate-400">
+                            <li class="flex items-center gap-2"><i class="fa-solid fa-check text-emerald-400"></i> Ergonomic injury prevention</li>
+                            <li class="flex items-center gap-2"><i class="fa-solid fa-check text-emerald-400"></i> High pressure stage composure</li>
+                        </ul>
+                    </div>
+
+                    <!-- Card 5: Music Qualifications -->
+                    <div class="glass-card rounded-2xl p-6 transition-all duration-300 hover:-translate-y-1">
+                        <div class="w-12 h-12 rounded-xl bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center text-emerald-400 mb-5">
+                            <i class="fa-solid fa-graduation-cap text-xl"></i>
+                        </div>
+                        <h3 class="font-heading text-xl font-bold text-white mb-2">Formal Qualifications</h3>
+                        <p class="text-slate-300 text-sm leading-relaxed mb-4">
+                            Recognized credentials including Music Degrees (BMus / BA Hons), Conservatoire Diplomas, and Grade 8 certifications from ABRSM, Trinity, or Rockschool.
+                        </p>
+                        <ul class="space-y-2 text-xs text-slate-400">
+                            <li class="flex items-center gap-2"><i class="fa-solid fa-check text-emerald-400"></i> BMus / Conservatoire Degree</li>
+                            <li class="flex items-center gap-2"><i class="fa-solid fa-check text-emerald-400"></i> Rockschool / ABRSM Grade 8</li>
+                        </ul>
+                    </div>
+
+                    <!-- Card 6: Ensemble Collaboration -->
+                    <div class="glass-card rounded-2xl p-6 transition-all duration-300 hover:-translate-y-1">
+                        <div class="w-12 h-12 rounded-xl bg-amber-500/10 border border-amber-500/30 flex items-center justify-center text-amber-400 mb-5">
+                            <i class="fa-solid fa-people-group text-xl"></i>
+                        </div>
+                        <h3 class="font-heading text-xl font-bold text-white mb-2">Collaboration & Direction</h3>
+                        <p class="text-slate-300 text-sm leading-relaxed mb-4">
+                            Interpersonal communication within large ensembles, working seamlessly under musical directors (MDs), accepting real-time critique, and supporting bandmates.
+                        </p>
+                        <ul class="space-y-2 text-xs text-slate-400">
+                            <li class="flex items-center gap-2"><i class="fa-solid fa-check text-emerald-400"></i> Following Musical Directors (MD)</li>
+                            <li class="flex items-center gap-2"><i class="fa-solid fa-check text-emerald-400"></i> Tight rhythmic ensemble playing</li>
+                        </ul>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 2: DUTIES -->
+        <section id="duties" class="py-16 relative">
+            <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center max-w-2xl mx-auto mb-14">
+                    <span class="text-rose-400 font-semibold text-xs sm:text-sm uppercase tracking-wider">Section 02</span>
+                    <h2 class="font-heading text-3xl sm:text-4xl font-bold text-white mt-2">Core Musician Duties</h2>
+                    <p class="text-slate-400 text-sm sm:text-base mt-2">Daily tasks, performance responsibilities, and professional expectations.</p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    
+                    <!-- Duty 1 -->
+                    <div class="glass-card rounded-2xl p-6 flex items-start gap-4">
+                        <div class="w-10 h-10 rounded-lg bg-purple-500/20 text-purple-400 flex items-center justify-center shrink-0 text-lg font-bold">
+                            01
+                        </div>
+                        <div>
+                            <h3 class="font-heading text-lg font-bold text-white">Rehearsal & Technical Preparation</h3>
+                            <p class="text-slate-300 text-sm mt-1 leading-relaxed">
+                                Practicing repertory independently before rehearsals. Attending band sound checks, sectionals, and full ensemble dry runs to polish arrangements and dynamics.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Duty 2 -->
+                    <div class="glass-card rounded-2xl p-6 flex items-start gap-4">
+                        <div class="w-10 h-10 rounded-lg bg-amber-500/20 text-amber-400 flex items-center justify-center shrink-0 text-lg font-bold">
+                            02
+                        </div>
+                        <div>
+                            <h3 class="font-heading text-lg font-bold text-white">Live Performance & Gigging</h3>
+                            <p class="text-slate-300 text-sm mt-1 leading-relaxed">
+                                Performing live concerts, festivals, corporate galas, theatrical shows, and private engagements. Delivering captivating stage presence with faultless timing.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Duty 3 -->
+                    <div class="glass-card rounded-2xl p-6 flex items-start gap-4">
+                        <div class="w-10 h-10 rounded-lg bg-rose-500/20 text-rose-400 flex items-center justify-center shrink-0 text-lg font-bold">
+                            03
+                        </div>
+                        <div>
+                            <h3 class="font-heading text-lg font-bold text-white">Session Recording</h3>
+                            <p class="text-slate-300 text-sm mt-1 leading-relaxed">
+                                Tracking instrumental parts in commercial recording studios for artists, producers, film scores, TV syncs, and advertising commercials.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Duty 4 -->
+                    <div class="glass-card rounded-2xl p-6 flex items-start gap-4">
+                        <div class="w-10 h-10 rounded-lg bg-cyan-500/20 text-cyan-400 flex items-center justify-center shrink-0 text-lg font-bold">
+                            04
+                        </div>
+                        <div>
+                            <h3 class="font-heading text-lg font-bold text-white">Song Composing & Arranging</h3>
+                            <p class="text-slate-300 text-sm mt-1 leading-relaxed">
+                                Writing original hooks, orchestrating horn/string sections, creating lead sheets, and adapting existing songs for custom live ensemble setups.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Duty 5 -->
+                    <div class="glass-card rounded-2xl p-6 flex items-start gap-4">
+                        <div class="w-10 h-10 rounded-lg bg-emerald-500/20 text-emerald-400 flex items-center justify-center shrink-0 text-lg font-bold">
+                            05
+                        </div>
+                        <div>
+                            <h3 class="font-heading text-lg font-bold text-white">Equipment Setup & Maintenance</h3>
+                            <p class="text-slate-300 text-sm mt-1 leading-relaxed">
+                                Maintaining, tuning, and safely transporting delicate gear. Setting up amps, pedalboards, wireless monitors, and PA equipment securely.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Duty 6 -->
+                    <div class="glass-card rounded-2xl p-6 flex items-start gap-4">
+                        <div class="w-10 h-10 rounded-lg bg-indigo-500/20 text-indigo-400 flex items-center justify-center shrink-0 text-lg font-bold">
+                            06
+                        </div>
+                        <div>
+                            <h3 class="font-heading text-lg font-bold text-white">Self-Promotion & Networking</h3>
+                            <p class="text-slate-300 text-sm mt-1 leading-relaxed">
+                                Managing online portfolios, social media engagement, liaising with booking agents, negotiating performance contracts, and managing tax filings.
+                            </p>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 3: AVERAGE PAY & MU RATES -->
+        <section id="pay" class="py-16 bg-studio-900/50 border-t border-slate-800/80 relative">
+            <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center max-w-2xl mx-auto mb-14">
+                    <span class="text-amber-400 font-semibold text-xs sm:text-sm uppercase tracking-wider">Section 03</span>
+                    <h2 class="font-heading text-3xl sm:text-4xl font-bold text-white mt-2">Average Pay & Rates</h2>
+                    <p class="text-slate-400 text-sm sm:text-base mt-2">UK salary benchmarks and Musicians' Union (MU) recommended minimum rates.</p>
+                </div>
+
+                <!-- Pay Cards Grid -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+                    
+                    <!-- Benchmark 1: Annual Salary -->
+                    <div class="glass-card rounded-2xl p-6 relative overflow-hidden">
+                        <div class="absolute top-0 right-0 w-24 h-24 bg-amber-500/10 rounded-bl-full pointer-events-none"></div>
+                        <span class="text-xs font-semibold text-amber-400 uppercase tracking-wide">Full-Time / Salaried</span>
+                        <h3 class="font-heading text-3xl font-extrabold text-white mt-2 mb-1">£26,000 - £48,000+</h3>
+                        <p class="text-slate-400 text-xs mb-4">Per Annum (UK Benchmark)</p>
+                        <p class="text-slate-300 text-sm leading-relaxed border-t border-slate-800 pt-3">
+                            Typical for full-time orchestra members, resident West End pit musicians, military band performers, and tenured academic music teachers.
+                        </p>
+                    </div>
+
+                    <!-- Benchmark 2: Live Gig Rates -->
+                    <div class="glass-card rounded-2xl p-6 relative overflow-hidden">
+                        <div class="absolute top-0 right-0 w-24 h-24 bg-rose-500/10 rounded-bl-full pointer-events-none"></div>
+                        <span class="text-xs font-semibold text-rose-400 uppercase tracking-wide">Freelance Live Gigs</span>
+                        <h3 class="font-heading text-3xl font-extrabold text-white mt-2 mb-1">£150 - £350+</h3>
+                        <p class="text-slate-400 text-xs mb-4">Per Gig / Engagement</p>
+                        <p class="text-slate-300 text-sm leading-relaxed border-t border-slate-800 pt-3">
+                            Standard pubs, functions, weddings, and corporate events. MU recommended minimum live performance rate starts around £140-£180+ plus travel allowances.
+                        </p>
+                    </div>
+
+                    <!-- Benchmark 3: Session Work -->
+                    <div class="glass-card rounded-2xl p-6 relative overflow-hidden">
+                        <div class="absolute top-0 right-0 w-24 h-24 bg-purple-500/10 rounded-bl-full pointer-events-none"></div>
+                        <span class="text-xs font-semibold text-purple-400 uppercase tracking-wide">Studio Recording</span>
+                        <h3 class="font-heading text-3xl font-extrabold text-white mt-2 mb-1">£180 - £400+</h3>
+                        <p class="text-slate-400 text-xs mb-4">Per 3-Hour Session</p>
+                        <p class="text-slate-300 text-sm leading-relaxed border-t border-slate-800 pt-3">
+                            Commercial studio session recording rates aligned with MU union session standards, incorporating broadcast overdub fees and sync royalties.
+                        </p>
+                    </div>
+
+                </div>
+
+                <!-- Interactive Earnings Estimator Tool -->
+                <div class="glass-card rounded-2xl p-6 sm:p-8 border-purple-500/30 max-w-3xl mx-auto">
+                    <div class="flex items-center gap-3 mb-6">
+                        <div class="w-10 h-10 rounded-xl bg-gradient-to-r from-amber-500 to-purple-600 flex items-center justify-center text-white font-bold">
+                            <i class="fa-solid fa-calculator"></i>
+                        </div>
+                        <div>
+                            <h3 class="font-heading font-bold text-xl text-white">Freelance Income Estimator</h3>
+                            <p class="text-slate-400 text-xs sm:text-sm">Estimate monthly gross income based on UK standard gig & session rates.</p>
+                        </div>
+                    </div>
+
+                    <div class="space-y-6">
+                        <!-- Slider 1: Live Gigs per Month -->
+                        <div>
+                            <div class="flex justify-between text-sm font-medium mb-2">
+                                <label for="gigsCount" class="text-slate-300">Live Gigs / Events per month (£200 avg)</label>
+                                <span id="gigsVal" class="text-amber-400 font-bold">4 gigs</span>
+                            </div>
+                            <input type="range" id="gigsCount" min="0" max="20" value="4" class="w-full h-2 bg-studio-800 rounded-lg appearance-none cursor-pointer accent-amber-500">
+                        </div>
+
+                        <!-- Slider 2: Studio Sessions per Month -->
+                        <div>
+                            <div class="flex justify-between text-sm font-medium mb-2">
+                                <label for="sessionsCount" class="text-slate-300">Studio Sessions per month (£220 avg)</label>
+                                <span id="sessionsVal" class="text-purple-400 font-bold">2 sessions</span>
+                            </div>
+                            <input type="range" id="sessionsCount" min="0" max="15" value="2" class="w-full h-2 bg-studio-800 rounded-lg appearance-none cursor-pointer accent-purple-500">
+                        </div>
+
+                        <!-- Result Display -->
+                        <div class="p-4 rounded-xl bg-studio-950 border border-slate-800 flex flex-col sm:flex-row items-center justify-between gap-4">
+                            <div>
+                                <span class="text-slate-400 text-xs block">Estimated Gross Monthly Income</span>
+                                <span id="estimatedIncome" class="font-heading text-3xl font-extrabold text-emerald-400">£1,240</span>
+                                <span class="text-slate-500 text-xs block">approx £14,880 annually (excluding teaching/royalties)</span>
+                            </div>
+                            <div class="text-xs text-slate-400 bg-studio-900 px-3 py-2 rounded-lg border border-slate-800 text-center sm:text-right">
+                                <i class="fa-solid fa-circle-info text-purple-400 mr-1"></i> Based on UK MU Rate Guidelines
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-studio-950 border-t border-slate-800/80 py-8 text-xs text-slate-500">
+        <div class="max-w-6xl mx-auto px-4 text-center space-y-3">
+            <p class="font-medium text-slate-400">Musician Career Profile & Industry Standard Guide</p>
+            <p>Ready for deployment on <span class="text-purple-400 font-semibold">GitHub Pages</span>. Accessible instantly via QR Code scanning.</p>
+            <p class="pt-2 text-slate-600">&copy; <span id="yearSpan"></span> Musician Reference Portfolio. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- QR CODE MODAL -->
+    <div id="qrModal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4 hidden">
+        <div class="glass-card bg-studio-900 border-purple-500/40 rounded-2xl max-w-sm w-full p-6 text-center relative shadow-2xl">
+            <button id="qrCloseBtn" class="absolute top-4 right-4 text-slate-400 hover:text-white p-1">
+                <i class="fa-solid fa-xmark text-lg"></i>
+            </button>
+
+            <div class="w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 flex items-center justify-center mx-auto mb-3">
+                <i class="fa-solid fa-qrcode text-xl"></i>
+            </div>
+
+            <h3 class="font-heading text-xl font-bold text-white mb-1">Access on Mobile</h3>
+            <p class="text-slate-400 text-xs mb-5">Scan this QR code with any mobile camera to view this webpage instant live.</p>
+
+            <!-- QR Code Render Box -->
+            <div class="bg-white p-4 rounded-xl inline-block shadow-inner mb-4">
+                <div id="qrcode"></div>
+            </div>
+
+            <p id="qrUrlText" class="text-[11px] font-mono text-purple-300 break-all bg-studio-950 p-2 rounded border border-slate-800 mb-4">
+                https://yourusername.github.io/musician/
+            </p>
+
+            <button id="copyUrlBtn" class="w-full py-2.5 rounded-xl bg-studio-800 hover:bg-studio-700 text-slate-200 text-xs font-semibold border border-slate-700 transition-colors flex items-center justify-center gap-2">
+                <i class="fa-solid fa-copy"></i> Copy Web Address
+            </button>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="fixed bottom-5 right-5 z-50 bg-purple-600 text-white px-4 py-2.5 rounded-xl shadow-lg text-xs font-medium flex items-center gap-2 transform translate-y-20 opacity-0 transition-all duration-300">
+        <i class="fa-solid fa-circle-check"></i> <span id="toastMsg">URL copied to clipboard!</span>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Dynamic Year
+            document.getElementById('yearSpan').textContent = new Date().getFullYear();
+
+            // Mobile Menu Toggle
+            const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+            const mobileMenu = document.getElementById('mobileMenu');
+            const mobileLinks = document.querySelectorAll('.mobile-link');
+
+            mobileMenuBtn.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+            });
+
+            mobileLinks.forEach(link => {
+                link.addEventListener('click', () => {
+                    mobileMenu.classList.add('hidden');
+                });
+            });
+
+            // QR Modal Logic
+            const qrModal = document.getElementById('qrModal');
+            const qrOpenBtn = document.getElementById('qrOpenBtn');
+            const qrCloseBtn = document.getElementById('qrCloseBtn');
+            const qrUrlText = document.getElementById('qrUrlText');
+            const qrcodeContainer = document.getElementById('qrcode');
+            let qrcodeObj = null;
+
+            function openQRModal() {
+                const currentUrl = window.location.href;
+                qrUrlText.textContent = currentUrl;
+                
+                qrcodeContainer.innerHTML = '';
+                qrcodeObj = new QRCode(qrcodeContainer, {
+                    text: currentUrl,
+                    width: 160,
+                    height: 160,
+                    colorDark : "#090a0f",
+                    colorLight : "#ffffff",
+                    correctLevel : QRCode.CorrectLevel.H
+                });
+
+                qrModal.classList.remove('hidden');
+            }
+
+            function closeQRModal() {
+                qrModal.classList.add('hidden');
+            }
+
+            qrOpenBtn.addEventListener('click', openQRModal);
+            qrCloseBtn.addEventListener('click', closeQRModal);
+            qrModal.addEventListener('click', (e) => {
+                if (e.target === qrModal) closeQRModal();
+            });
+
+            // Clipboard Copying Functionality
+            const copyUrlBtn = document.getElementById('copyUrlBtn');
+            copyUrlBtn.addEventListener('click', () => {
+                const textToCopy = window.location.href;
+                const tempInput = document.createElement('input');
+                tempInput.value = textToCopy;
+                document.body.appendChild(tempInput);
+                tempInput.select();
+                document.execCommand('copy');
+                document.body.removeChild(tempInput);
+
+                showToast('Web address copied to clipboard!');
+            });
+
+            function showToast(msg) {
+                const toast = document.getElementById('toast');
+                const toastMsg = document.getElementById('toastMsg');
+                toastMsg.textContent = msg;
+                toast.classList.remove('translate-y-20', 'opacity-0');
+                
+                setTimeout(() => {
+                    toast.classList.add('translate-y-20', 'opacity-0');
+                }, 2500);
+            }
+
+            // Interactive Earnings Calculator
+            const gigsInput = document.getElementById('gigsCount');
+            const sessionsInput = document.getElementById('sessionsCount');
+            const gigsVal = document.getElementById('gigsVal');
+            const sessionsVal = document.getElementById('sessionsVal');
+            const estimatedIncome = document.getElementById('estimatedIncome');
+
+            function updateEarnings() {
+                const gigs = parseInt(gigsInput.value, 10);
+                const sessions = parseInt(sessionsInput.value, 10);
+
+                gigsVal.textContent = `${gigs} ${gigs === 1 ? 'gig' : 'gigs'}`;
+                sessionsVal.textContent = `${sessions} ${sessions === 1 ? 'session' : 'sessions'}`;
+
+                // Rates: Gig = ~£200, Session = ~£220
+                const total = (gigs * 200) + (sessions * 220);
+                estimatedIncome.textContent = `£${total.toLocaleString('en-GB')}`;
+            }
+
+            gigsInput.addEventListener('input', updateEarnings);
+            sessionsInput.addEventListener('input', updateEarnings);
+
+            // Web Audio API Synthetic Chord Generator
+            const playAudioBtn = document.getElementById('playAudioBtn');
+            let audioCtx = null;
+
+            playAudioBtn.addEventListener('click', () => {
+                try {
+                    if (!audioCtx) {
+                        audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+                    }
+                    if (audioCtx.state === 'suspended') {
+                        audioCtx.resume();
+                    }
+
+                    // Play a pleasant warm Jazz Major 7th Chord (Cmaj7: C4, E4, G4, B4)
+                    const frequencies = [261.63, 329.63, 392.00, 493.88];
+                    
+                    frequencies.forEach((freq, index) => {
+                        const osc = audioCtx.createOscillator();
+                        const gain = audioCtx.createGain();
+
+                        osc.type = 'triangle';
+                        osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
+
+                        // Gentle Envelope
+                        gain.gain.setValueAtTime(0, audioCtx.currentTime);
+                        gain.gain.linearRampToValueAtTime(0.12, audioCtx.currentTime + 0.1 + (index * 0.05));
+                        gain.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + 1.8);
+
+                        osc.connect(gain);
+                        gain.connect(audioCtx.destination);
+
+                        osc.start(audioCtx.currentTime + (index * 0.05));
+                        osc.stop(audioCtx.currentTime + 2.0);
+                    });
+
+                    showToast('Playing synthetic studio chord...');
+                } catch (err) {
+                    console.error('Audio playback error:', err);
+                }
+            });
+        });
+    </script>
+</body>
+</html>
